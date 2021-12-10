@@ -5,3 +5,5 @@ Minimal planar clusters: double and triple bubbles.
 https://indico.math.cnrs.fr/event/7000/page/445-accueil
 
 written with: https://revealjs.com/
+
+View slides online: https://paolini.github.io/talk-2021-Nancy/
