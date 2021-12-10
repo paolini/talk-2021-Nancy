@@ -1,0 +1,557 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>E. Paolini: Optimal Planar Clusters (Nancy 2021)</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css">
+		<link rel="stylesheet" href="mystyle.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+		<!-- Enable MathJAX -->
+		<!--script>MathJax = {tex: {inlineMath: [['$', '$']]}};</script>
+		<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script-->
+		<!--script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script-->
+
+		<script
+		src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+		crossorigin="anonymous"></script>
+
+		<!-- jsbubble -->
+		<script src="jsbubble/assert.js"></script>
+		<script src="jsbubble/vec.js"></script>
+		<script src="jsbubble/vertex.js"></script>
+		<script src="jsbubble/chain.js"></script>
+		<script src="jsbubble/region.js"></script>
+		<script src="jsbubble/cluster.js"></script>
+		<script src="jsbubble/myctx.js"></script>
+		<script src="jsbubble/main.js"></script>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2><b>Minimal Planar Clusters</b></h2>
+					<h4></h4>
+					<h4>[E. Paolini: Università di Pisa]</h4>
+					<h4></h4>
+					<h3>Nancy &dash; December 8, 2021</h3>
+				</section>
+				<section>
+					<p>
+					An <b>$N$-cluster</b>
+					is an $N$-uple:
+					$$\mathbf{E} = (E_1,\dots, E_N)$$
+					with $E_i \subset \mathbb R^d$ and		
+					$\lvert E_i \cap E_j\rvert = 0$ when $i\neq j$.
+					</p>	
+				<img class="center" src="cluster0.png" height="300">
+				</section>
+				<section>
+					<p>
+					The <b>measure</b> of $\mathbf E$ is an $N$-uple:
+					$$
+					\lVert \mathbf E \rVert = (\lvert E_1\rvert, \dots, \lvert E_N\rvert) 
+					\in \mathbb R^N
+					$$
+					The <b>perimeter</b> of $\mathbf E$ is a scalar:
+					$$
+					P(\mathbf E) = \frac 1 2 \left(
+						P(E_1) + \dots + P(E_N) + P(E_0)
+						\right)
+					$$
+					where $E_0$ is the <b>external region</b> of $\mathbf E$:
+					$$
+					E_0 = \mathbb R^d \setminus (E_1\cup \dots \cup E_N).
+					$$ 
+					</p>
+				</section>
+				<section>
+					<img class="center" src="perimeter.png" height=600>
+					<aside class="notes">
+						each boundary is counted twice
+					</aside>
+				</section>
+				<section>
+					<p>
+						A <b>minimal cluster</b>
+						is a cluster $\mathbf E$ such that 
+						$$
+						P(\mathbf E) = \min \{P(\mathbf F)\colon \lVert \mathbf F\rVert = \lVert \mathbf E \rVert\}
+						$$
+					</p>
+					<p><b>Problem:</b>
+					given $\mathbf m\in \mathbb R^N$ find 
+					a minimal $N$-cluster $\mathbf E$ such that $\lVert \mathbf E\rVert = \mathbf m$
+					</p>
+					<aside class="notes">
+						Constrained minimizer
+					</aside>
+				</section>
+				<section>
+					<p>
+						From now on we stick to the <b>planar</b> case: $d=2$,
+						$E_1,\dots,E_N\subset \mathbb R^2$.
+					</p>
+				</section>
+				<section>
+					<!--h4>History for $d=2$ (planar clusters)</h4-->
+					<ul>
+						<li>$N=1$ is the <b>isoperimetric</b> problem <br>(Steiner 1842)
+						</li>
+						<li>$N=2$ is the <b>double-bubble</b> <br>(Foisy &amp; al. 1993)
+						</li>
+						<li>$N=3$ is the <b>triple-bubble</b> <br>(Wichiramala 2004; Lawlor 2019)
+						</li>
+						<li>$N=4$ and <b>equal areas</b> <br>(P. &amp; Tamagnini 2018; P. &amp; Tortorelli 2020)
+						</li>
+						<li>$N=\infty$ with equal areas is the <b>honeycomb</b> <br>(Hales 1999)
+						</li>
+					</ul>
+					<aside class="notes">
+						Foisy: Frank Morgan undergraduate research program <br>
+						Wichiramala PhD advisor was Sullivan
+					</aside>
+				</section>
+				<section>
+					<img height="300" src="history.png">
+				</section>
+				<section>	
+					<h4>homemade numerical simulation</h4>		
+					<!--canvas id="canvas" width="640" height="480">						
+					<div id="div" style="display: none"></div>
+					</canvas-->
+					<iframe class="center" data-preload width="1000" height="480" 
+						data-src--="https://paolini.github.io/jsbubble/custom.html" 
+						data-src="jsbubble/custom.html" 
+						style="vertical-align: middle"></iframe>
+					<br><a style="font-size: 50%" href="https://paolini.github.io/jsbubble/">paolini.github.io/jsbubble/</a>
+					<aside class="notes">
+						note cocircular arcs, leaves and bump!
+					</aside>
+				</section>
+				<section>
+					<h4>Existence</h4>
+					<p>
+						Given $\mathbf m\in \mathbb R^N_+$ 
+						there exists a minimal cluster $\mathbf E$ 
+						with $\lVert \mathbf E \rVert = \mathbf m$
+						[Almgren 1976] 
+					</p>
+					<p>
+						<b>Proof:</b>
+						concentration compactness. 
+						Almgren's Lemma.
+					</p>
+				</section>
+				<section>
+					<h4>Regularity (1)</h4>
+					<ul>
+						<li>
+							the regions of a minimal set are bounded by a finite 
+							network of <b>circular arcs</b> (or straight segments)
+						</li>
+						<li>
+							the arcs meet in triple points with equal <b>120 degrees</b> 
+							angles
+						</li>
+						<li>
+							the <b>signed curvatures</b> of the arcs meeting in a triple point 
+							sum up to zero
+						</li>
+					</ul>
+				</section>
+				<section>
+					<img class="center" src="curvature.png" height="200">
+				</section>
+				<section>
+					<h4>Regularity (2)</h4>
+					<ul>
+						<li>
+							<b>pressures</b> $\mathbf p = (p_1, \dots, p_N)$ can be defined
+							so that the curvature between regions $E_i$ 
+							and $E_j$ is $\kappa_{ij} = p_j - p_i$. 
+						</li>
+						<li>
+							pressures are <b>Lagrange multipliers</b>:
+							if $\mathbf E(t_0)$ is minimal one has:
+							$$
+							 \frac{d}{dt}_{|t=t_0} P(\mathbf E(t))
+							 = \mathbf p \cdot \frac{d}{dt}_{|t=t_0} \lVert \mathbf E(t)\rVert  
+							$$
+							by homogeneity $P(\mathbf E) = 2\mathbf p \cdot \lVert \mathbf E\rVert$
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Stationary clusters</h4>
+					<p>						
+						We call <b>stationary</b> any cluster satisfying the 
+						previous regularity results.
+					</p>
+					<p> Stationarity is preserved under <b>isometries</b>,
+						<b>dilations</b> and <b>circle inversions</b>
+						$z\mapsto \frac{1}{\bar z}$
+					</p>
+					<img height="200" src="inversion0.png" style="vertical-align: middle">
+					$\to$
+					<img height="200" src="inversion1.png" style="vertical-align: middle">
+					<aside class="notes">Reuleaux triangle</aside>
+				</section>
+				<!--section>
+					<h4>Riemann sphere</h4>
+					<div class="r-stack">
+						<img class="fragment" src="riemann1.png" height="200">
+						<img class="fragment" src="riemann2.png" height="200">
+						<img class="fragment" src="riemann3.png" height="200">
+					</div>
+					<ul> 
+						<li>$N=1$: the <b>circle</b> is the stereographic projection 
+							of a <b>great circle</b> on the Riemann sphere
+						</li>
+						<li>$N=2$: the <b>double-bubble</b> is the 
+						projection of the symmetric 3-splitting of the sphere
+						</li>
+						<li>
+							$N=3$: the <b>triple-bubble</b> is the projection 
+							of a geodesic regular tetrahedron
+						</li>
+					</ul>
+				</section-->
+				<section>
+					<h4>Open problem (1)</h4>
+					<p>
+						<b>cluster conjecture:</b>
+						if $\mathbf E = (E_1, \dots, E_N)$ 
+						is a minimal cluster
+						then each $E_k$ is a connected set.
+					</p>
+					<img class="center" src="disconnected.png">
+				</section>
+				<section>
+					<h4>Open problem (2)</h4>
+					<p>
+						We say that $\mathbf E$ is a 
+						<b>weakly minimal cluster</b> if 
+						$$
+						  P(\mathbf E) = \min \{P(\mathbf F)\colon \lVert\mathbf F\rVert \ge \lVert \mathbf E \rVert\}
+						$$
+
+						Is there a cluster which is minimal
+						but <b>not</b> weakly minimal?
+					</p>
+					<p>
+						If the cluster $\mathbf E$ is minimal but not weakly minimal, 
+						there exists a weakly minimal set $\mathbf F$
+						such that $\lVert \mathbf F\rVert > \lVert \mathbf E\rVert$,
+						$P(\mathbf F) &lt; P(\mathbf E)$.
+						<b>Known:</b> the regions of such $\mathbf F$ 
+						have a total of at least 7 connected 
+						components.
+					</p>
+					<aside class="notes">
+						inequality is componentwise between vectors 
+					</aside>
+				</section>
+				<section>
+					<h4>double-bubble</h4>
+					<ol>
+						<li>remove <b>empty chambers</b> with weak minimizers
+						</li>
+					</ol>
+					<img class="center" height="300" src="double-bubble-1.png">
+				</section>
+				<section>
+					<h4>double-bubble</h4>
+					<ol>
+						<li value="2">remove <b>leaves</b> by rotating and bumping
+						</li>
+					</ol>
+					<img class="center" height="300" src="double-bubble-2.png">
+				</section>
+				<section>
+					<h4>double-bubble</h4>
+					<ol>
+						<li value="3">uniqueness by <b>monotonicity</b>
+						</li>
+					</ol>
+					<div class="center">
+						<img height="300" src="double-bubble-3.png">
+						<img height="300" src="double-bubble-4.png">
+					</div>
+					<aside class="notes">
+						A priori it is not clear that each stationary double bubble
+						is a minimal cluster. 
+						If there were two double bubbles with the same 
+						areas maybe only one of them could be minimal.
+						<br>
+						Monotonicity: if you increase one radius you 
+						increase the corresponding area and decrease the other area
+					</aside>
+				</section>
+				<section>
+					<h4>Triple bubble: monotonicity</h4>
+					<p>
+						For each triple of measures 
+						$\mathbf m = (m_1, m_2, m_3)$ 
+						there exists a unique (up to isometries) 
+						stationary cluster $\mathbf E$ 
+						such that $\lVert \mathbf E\rVert = \mathbf m$ 
+						and all three regions $E_1, E_2, E_3$
+						are connected. 
+						We call it <b>standard triple bubble</b>.
+					</p>
+					<p>Also for triple bubble we have monotonicity. [Montesinos 1990]</p>
+				</section>
+				<section>
+					<div class="center">
+						<img height="300" src="triple-bubble-3.png">
+						<img height="300" src="triple-bubble-4.png">
+					</div>
+					<aside class="notes">
+						You can compare areas because set inclusion is preserved.
+						<br>
+						You can compare radii if the corresponding circles 
+						are one inside the other.
+					</aside>
+				</section>
+				<section>
+					<h4>Triple bubble: unified minimizers [Lawlor]</h4>
+					<p>
+						Let $\mathbf B(\mathbf m)$ be the 
+						<b>standard triple bubble</b> with 
+						measures $\mathbf m = (m_1, m_2, m_3)$.
+					</p>
+					<p>
+						The <b>unified quotient</b> of a cluster $\mathbf E$ is 
+						$$
+							\mu(\mathbf E) = \frac{P(\mathbf E)}{P(\mathbf B(\lVert \mathbf E\rVert))}
+						$$
+					</p>
+					<p><b>goal:</b>
+						prove that 
+						for every $3$-clusters $\mathbf E$ one has
+						$$
+							\mu(\mathbf E) \ge 1 
+						$$
+					</p>
+				</section>
+				<section>
+					<h4>existence of unified minimizers</h4>
+					<p>	There exists a $3$-cluster $\mathbf E$ such that 
+						$\mu(\mathbf E)$ is minimal.
+					</p>
+					<p>
+						<b>goal:</b> prove that $\mu(\mathbf E)=1$.
+					</p>
+					<p>
+						<b>advantage:</b> we have no more a constraint on the measure
+						of $\mathbf E$.
+					</p>
+					<aside class="notes">any variation gives a competitor</aside>
+				</section>
+				<section>
+					<h4>mental picture...</h4>
+					<img class="center" height="350" src="unified.png">
+				</section>
+				<section>
+					<p><b>Lemma 1.</b>
+						If $\mathbf E$ is a unified minimizer  
+						with <br>$\mu(\mathbf E)&lt;1$ and 
+						$\mathbf F$ is any cluster with $P(\mathbf F)&lt; P(\mathbf E)$
+						one has:
+						$$
+						P(\mathbf E) - P(\mathbf F) &lt; 
+						P(\mathbf B(\lVert \mathbf E\rVert)) - P(\mathbf B(\lVert \mathbf F \rVert))
+						$$
+					</p>
+					<p><b>proof:</b>
+					$$
+					\begin{align*}
+					P(\mathbf E) - P(\mathbf F) 
+					&= \mu(\mathbf E) P(\mathbf B(\mathbf E)) - \mu(\mathbf F) P(\mathbf B(\mathbf F)) \\
+					&\le \mu(\mathbf E) \big(P(\mathbf B(\mathbf E)) - P(\mathbf B(\mathbf F))\big)\\
+					& &lt; P(\mathbf B(\mathbf E)) - P(\mathbf B(\mathbf F))
+					\end{align*}
+					$$
+					</p>
+				</section>
+				<section>
+					<p><b>Lemma 2.</b> If $r &lt; R$ one has:
+						$$
+						\begin{gather*}
+						P(\mathbf B(a_1, a_2, \pi R^2)) - P(\mathbf B(a_1, a_2, \pi r^2))\\
+						 &lt; 2\pi R - 2\pi r
+						\end{gather*}
+						$$
+					</p>
+				</section>
+				<section>
+					<p><b>Proof</b> of Lemma 2.
+					<img height="150" src="lemma2.png">
+					$$
+					\begin{gather*}
+					\left[P(\mathbf B(a_1,a_2, \pi t^2))\right]_{t=r}^R
+						= \int_{r}^R \frac{d}{dt} P(\mathbf B(a_1, a_2, \pi t^2)) \, dt \\
+						= \int_{r}^R p_3(t) \frac{d}{dt} (\pi t^2)\, dt 
+						= \int_{r}^R \frac{1}{R_3(t)} 2\pi t\, dt \\
+						&lt; 2\pi \int_{r}^R \frac{1}{t} \cdot t\, dt
+						= 2\pi (R - r)
+					\end{gather*}
+					$$
+					</p>
+				</section>
+				<section>
+					<p><b>Lemma 36%, 64%</b>.
+					Let $\mathbf E = (E_1, E_2, E_3)$ be a unified minimizer with $\mu(\mathbf E)&lt; 1$.
+					If $C$ is a <b>connected component</b> of $E_3$ then:
+					$$ 
+					\lvert C \rvert > \frac{9}{25} \lvert E_3\rvert 
+					$$
+					moreover if $C$ is <b>internal</b> then:
+					$$ 
+					\lvert C \rvert > \frac{16}{25} \lvert E_3\rvert 
+					$$
+					</p>
+				</section>
+				<section>
+					<img height="200" class="center" src="lemma36-64.png">
+					<p><b>Proof.</b>
+						$\lvert C\rvert=\pi \rho^2$.
+						Give $C$ to $E_0$, $E_1$ or $E_2$:<br>
+						$\mathbf F = (E_1 \cup C, E_2, E_3\setminus C)$.
+						$$
+						\begin{align*}
+						P(\mathbf E) - P(\mathbf F) 
+						&\ge \frac{P(C)}{3\text{ or } 2}
+						\ge \frac{2\pi \rho}{3\text{ or } 2}
+						\end{align*}
+						$$
+					</p>
+				</section>
+				<section>
+					<p>
+						$$
+						P(\mathbf E) - P(\mathbf F)
+						&lt; 2\pi R - 2\pi r 
+						$$
+						with $\pi R^2 = \lvert \mathbf E_3\rvert$,
+						$\pi r^2 = \lvert \mathbf E_3\rvert - \lvert C\rvert
+						= \pi R^2 -\pi \rho^2$
+						so 
+						$$
+						\frac{2\pi\rho}{3\text{ or }2} 
+						&lt; 2\pi(R-\sqrt{R^2-\rho^2})
+						$$
+						$$
+						R^2 - \rho^2 &lt; \left(R - \frac{\rho}{3 \text{ or }2}\right)^2
+						$$
+					</p>
+					<aside class="notes">
+						user both previous lemmas
+						<br>
+						the area of the first components might change or not.
+						If it changes you have anyway the correct inequality.
+					</aside>
+				</section>
+				<section>
+					<p>
+						$$
+						2 R \frac{\rho}{3\text{ or }2} &lt; \rho^2 + \frac{\rho^2}{9\text{ or }4}
+						$$
+						$$
+						\dots
+						$$
+						$$
+						\rho > \left(\frac{3}{5} \text{ or } \frac{4}{5} \right)R
+						$$
+						$$
+						\pi \rho^2 > \left(\frac{9}{25} \text{ or } \frac{16}{25}\right) \pi R^2 
+						$$
+					</p>
+				</section>
+				<section>
+					<p>
+						Since 36% + 64% = 100%
+						and we have strict inequalities
+						a disconnected region cannot 
+						have an internal component.
+					</p>
+					<p>
+						Since 36% + 36% + 36% > 100%
+						a disconnected region has at 
+						most two components (both external)
+					</p>
+				</section>
+				<!--section>
+					<img class="center" height="600" src="wichiramala.png">
+				</section-->
+				<section>
+					<p><b>Lemma 3:</b> If $\mathbf E$ is a unified minimizer and $\kappa(E_i)$ is 
+						the curvature of an external edge, then 
+						$$
+						 \kappa(E_i) = \mu(\mathbf E) \kappa (B_i)
+						$$
+						where $B_i$ is the corresponding region of the standard 
+						bubble with same area.
+					</p>
+				</section>
+				<section>
+					<img class="center" height="200" src="kappa.png">
+					<p><b>Proof.</b>
+						$\mu(\mathbf E(t))$ is minimal if $\mathbf E(0)=\mathbf E$.
+					$$
+					 0  
+					 = \left[\frac{d}{dt} \frac{P(\mathbf E(t))}{P(\mathbf B(\lVert \mathbf E(t) \rVert))}\right]_{t=0} \\
+					$$
+					$$
+					% \frac{\kappa(E_i)}{\kappa(B_i)} =
+					\left[\frac{\frac{d}{dt}P(\mathbf E(t))}{\frac{d}{dt}P(\mathbf B(\lVert \mathbf E(t) \rVert))}\right]_{t=0}
+					= \frac{P(\mathbf E)}{P(\mathbf B(\lVert \mathbf E \rVert))}
+					= \mu(\mathbf E)
+					$$
+					\end{gather*}
+					</p>
+				</section>
+				<section>
+					<p>
+						Previous lemma permits us to rule out "leaves"
+					</p>
+					<p>
+						Only possibility remaining can be discarder by a symmetry
+						argument
+					</p>
+					<img class="center" height="200" src="flower.png">
+				</section>
+				<section>
+					<h2>thank you!</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+	</body>
+</html>
