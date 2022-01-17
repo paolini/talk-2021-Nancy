@@ -178,11 +178,11 @@
 						<li>
 							<b>pressures</b> $\mathbf p = (p_1, \dots, p_N)$ can be defined
 							so that the curvature between regions $E_i$ 
-							and $E_j$ is $\kappa_{ij} = p_j - p_i$. 
+							and $E_j$ is $\kappa_{ij} = p_j - p_i$ (with $p_0=0$)
 						</li>
 						<li>
 							pressures are <b>Lagrange multipliers</b>:
-							if $\mathbf E(t_0)$ is minimal one has:
+							if $\mathbf E = \mathbf E(t_0)$ is minimal one has:
 							$$
 							 \frac{d}{dt}_{|t=t_0} P(\mathbf E(t))
 							 = \mathbf p \cdot \frac{d}{dt}_{|t=t_0} \lVert \mathbf E(t)\rVert  
@@ -365,11 +365,11 @@
 				<section>
 					<p><b>Lemma 1.</b>
 						If $\mathbf E$ is a unified minimizer  
-						with <br>$\mu(\mathbf E)&lt;1$ and 
-						$\mathbf F$ is any cluster with $P(\mathbf F)&lt; P(\mathbf E)$
+						with <br>$\mu(\mathbf E)\le 1$ and 
+						$\mathbf F$ is any cluster
 						one has:
 						$$
-						P(\mathbf E) - P(\mathbf F) &lt; 
+						P(\mathbf E) - P(\mathbf F) \le 
 						P(\mathbf B(\lVert \mathbf E\rVert)) - P(\mathbf B(\lVert \mathbf F \rVert))
 						$$
 					</p>
@@ -379,7 +379,7 @@
 					P(\mathbf E) - P(\mathbf F) 
 					&= \mu(\mathbf E) P(\mathbf B(\mathbf E)) - \mu(\mathbf F) P(\mathbf B(\mathbf F)) \\
 					&\le \mu(\mathbf E) \big(P(\mathbf B(\mathbf E)) - P(\mathbf B(\mathbf F))\big)\\
-					& &lt; P(\mathbf B(\mathbf E)) - P(\mathbf B(\mathbf F))
+					&\le P(\mathbf B(\mathbf E)) - P(\mathbf B(\mathbf F))
 					\end{align*}
 					$$
 					</p>
@@ -411,7 +411,7 @@
 				</section>
 				<section>
 					<p><b>Lemma 36%, 64%</b>.
-					Let $\mathbf E = (E_1, E_2, E_3)$ be a unified minimizer with $\mu(\mathbf E)&lt; 1$.
+					Let $\mathbf E = (E_1, E_2, E_3)$ be a unified minimizer with $\mu(\mathbf E)\le 1$.
 					If $C$ is a <b>connected component</b> of $E_3$ then:
 					$$ 
 					\lvert C \rvert > \frac{9}{25} \lvert E_3\rvert 
@@ -498,7 +498,7 @@
 					<p><b>Lemma 3:</b> If $\mathbf E$ is a unified minimizer and $\kappa(E_i)$ is 
 						the curvature of an external edge, then 
 						$$
-						 \kappa(E_i) = \mu(\mathbf E) \kappa (B_i)
+						 \kappa(E_i) = \mu(\mathbf E) \cdot \kappa (B_i)
 						$$
 						where $B_i$ is the corresponding region of the standard 
 						bubble with same area.
@@ -522,9 +522,26 @@
 					</p>
 				</section>
 				<section>
-					<p>
-						Previous lemma permits us to rule out "leaves"
+					<p><b>Lemma 4:</b> 
+						If $C\subset E_1$ is a triangular external component of 
+						a unified minimizer $\mathbf E$ then $C=E_1$.
+					</b>
 					</p>
+					<p><b>Proof:</b>
+					Let $\mathbf B= \mathbf B(\lVert \mathbf E\rVert)$. The three external curvatures 
+					of $\mathbf B$ coincide with $\mu=\mu(\mathbf E)$ times the curvatures of the regions 
+					of $\mathbf E$ by previous Lemma. 
+					So by taking a rescaling $\mathbf F = \frac 1 {\mu} \mathbf B$ we obtain 
+					that $F_1$ is isometric to $C$. 
+					But since $\mu\le 1$
+					\[
+					\lvert E_1\rvert 
+					= \lvert B_1\rvert 
+					= \mu^2 \cdot \lvert F_1\rvert \le \lvert C\rvert.
+					\]
+					</p>
+				</section>
+				<section>
 					<p>
 						Only possibility remaining can be discarder by a symmetry
 						argument
